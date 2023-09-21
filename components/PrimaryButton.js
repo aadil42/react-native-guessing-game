@@ -10,7 +10,7 @@ const PrimaryButton = ({title}) => {
                 ({pressed}) => {
                    return pressed ? [styles.btn, styles.pressedBtn] : styles.btn
                 }
-            } android_ripple={{color: '#3b011e'}}>
+            } android_ripple={{color: '#5d0330'}}>
                 <Text style={styles.btnText}>{title}</Text>
             </Pressable>
         </View>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         width: "45%"
     },
     btn: {
-        backgroundColor: "#54022b",
+        backgroundColor: "#75093f",
         paddingHorizontal: 8,
         paddingVertical: 8,
     },
