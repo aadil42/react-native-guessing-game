@@ -1,10 +1,17 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
 
 export default function App() {
   return (
-    <View>
+    <View style={styles.appContainer}>
       <StartGameScreen />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  appContainer: {
+    backgroundColor: "#e8d106",
+    flex: 1
+  }
+});
