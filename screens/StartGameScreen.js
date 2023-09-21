@@ -9,6 +9,9 @@ const StartGameScreen = () =>  {
                     placeholder=""
                     placeholderTextColor="#ffffff"
                     maxLength={2}
+                    keyboardType='number-pad'
+                    autoCapitalize="none"
+                    autoCorrect={false}
             />            
             <PrimaryButton title="Reset" />
             <PrimaryButton title="Confirm" />
