@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         margin: 4,
         borderRadius: 28,
         overflow: "hidden",
-        width: "30%"
+        width: "45%"
     },
     btn: {
         backgroundColor: "#54022b",
