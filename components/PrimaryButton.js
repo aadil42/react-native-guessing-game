@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     pressableContainer: {
         margin: 4,
         borderRadius: 28,
-        overflow: "hidden"
+        overflow: "hidden",
+        width: "30%"
     },
     btn: {
         backgroundColor: "#54022b",
