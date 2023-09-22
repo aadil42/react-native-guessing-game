@@ -10,6 +10,12 @@ const StartGameScreen = () =>  {
         setEnteredNumber(inputText);
     }
 
+    const confirmHandler = () => {
+        if(!enteredNumber) console.log('oops, you must enter something');
+    }
+
+    
+
     return (    
         <View style={styles.container}>
           <View style={styles.inputContainer}>
@@ -27,7 +33,7 @@ const StartGameScreen = () =>  {
         </View>  
         <View style={styles.btnContainer}>
             <PrimaryButton title="Reset" />
-            <PrimaryButton title="Confirm" />
+            <PrimaryButton onPress={confirmHandler} title="Confirm" />
         </View>               
         </View>
     );
