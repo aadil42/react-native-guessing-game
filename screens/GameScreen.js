@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Alert } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
+import BlurButton from '../components/BlurButton';
 import Colors from '../constants/Colors';
 
 const generateGuess = (min, max, exclude) => {
@@ -18,10 +19,17 @@ const GameScreen = ({pickedNumber}) => {
     const [guess, setGuess] = useState();
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(100);
+    const [guessCount, setGuessCount] = useState(1);
 
     useEffect(() => {
         setGuess(generateGuess(min,max,pickedNumber));
     },[]);
+
+    const onBlurPress = () => {
+        Alert.alert('Out of Guesses', 'Reload the App to reste the guess', [
+            { text: 'Ok', style: 'cancel' },
+          ]);
+    }
 
     const bigGuessHandler = () => {
         console.log('big runs');
@@ -34,6 +42,7 @@ const GameScreen = ({pickedNumber}) => {
         }
         setGuess(generateGuess(min, guess, guess));
         setMax(guess);
+        setGuessCount((count) => count+1);
     }
 
     const smallGuessHandler = () => {
@@ -47,6 +56,7 @@ const GameScreen = ({pickedNumber}) => {
         }
         setGuess(generateGuess(guess, max, guess));
         setMin(guess);
+        setGuessCount((count) => count+1);
     }
 
     return (
@@ -59,8 +69,11 @@ const GameScreen = ({pickedNumber}) => {
             <View>
                 {guess === pickedNumber && <Text>Computer Won</Text>}
                 <View style={styles.btnContainer}>
-                    <PrimaryButton onPress={smallGuessHandler} title="Too small" />
-                    <PrimaryButton onPress={bigGuessHandler} title="Too big" />
+                {guessCount < 4 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
+                {guessCount < 4 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />}
+
+                {guessCount > 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
+                {guessCount > 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
                 </View>
             </View>
         </View>
@@ -104,7 +117,7 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingTop: 14,
         width: "60%"
-    }
+    },
 });
 
 export default GameScreen;
