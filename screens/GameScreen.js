@@ -7,7 +7,6 @@ import Colors from '../constants/Colors';
 
 const generateGuess = (min, max, exclude) => {
     let guess =  Math.floor(Math.random() * (max - min)) + min;
-    console.log(min,max,guess);
     if(exclude === guess) {
         return generateGuess(min, max, exclude);
     }
@@ -15,15 +14,25 @@ const generateGuess = (min, max, exclude) => {
 }
 const lieTitle = `Don't lie!`;
 const lieMessage = `You know that this is wrong...`;
-const GameScreen = ({pickedNumber}) => {
+const GameScreen = ({pickedNumber, 
+                     makeComputerWinner, 
+                     setGuessCount, 
+                     guessCount,
+                     resetGame}) => {
     const [guess, setGuess] = useState();
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(100);
-    const [guessCount, setGuessCount] = useState(1);
+
 
     useEffect(() => {
         setGuess(generateGuess(min,max,pickedNumber));
     },[]);
+
+    useEffect(() => {
+        if(guess === pickedNumber) {
+            makeComputerWinner(true);
+        }
+    },[guess]);
 
     const onBlurPress = () => {
         Alert.alert('Out of Guesses', 'Reload the App to reste the guess', [
@@ -32,13 +41,11 @@ const GameScreen = ({pickedNumber}) => {
     }
 
     const bigGuessHandler = () => {
-        console.log('big runs');
         if(guess < pickedNumber) {
             Alert.alert(lieTitle, lieMessage, [
                 { text: 'Sorry!', style: 'cancel' },
             ]);
-            console.log('lier');
-                return;
+            return;
         }
         setGuess(generateGuess(min, guess, guess));
         setMax(guess);
@@ -46,12 +53,10 @@ const GameScreen = ({pickedNumber}) => {
     }
 
     const smallGuessHandler = () => {
-        console.log('small runs');
         if(guess > pickedNumber) {
             Alert.alert(lieTitle, lieMessage, [
                 { text: 'Sorry!', style: 'cancel' },
               ]);
-            console.log('lier');
             return;
         }
         setGuess(generateGuess(guess, max, guess));
@@ -67,19 +72,22 @@ const GameScreen = ({pickedNumber}) => {
                 <Title styles={styles.num} text={guess}/>
             </View>
             <View>
-                {guess === pickedNumber && <Text>Computer Won</Text>}
                 <View style={styles.btnContainer}>
-                {guessCount < 4 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
-                {guessCount < 4 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />}
+                {guessCount < 3 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
+                {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />}
 
-                {guessCount > 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
-                {guessCount > 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
+                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
+                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
                 </View>
             </View>
 
             <View style={styles.countContainer}>
                 <Title styles={styles.guessNum} text="Guess Count"/>
                 <Title styles={styles.guessNum} text={guessCount}/>
+            </View>
+
+            <View style={styles.btnContainer}>
+                {guessCount > 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
             </View>
         </View>
     );

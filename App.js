@@ -4,12 +4,22 @@ import { useState } from 'react';
 
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
+
 // just to set upstream
 import Colors from './constants/Colors';
 
 export default function App() {
 
   const [pickedNumber, setPickedNumber] = useState();
+  const [didComputerWin, setDidComputerWin] = useState(false);
+  const [guessCount, setGuessCount] = useState(1);
+
+  const resetGame = () => {
+    setPickedNumber(null);
+    setDidComputerWin(false);
+    setGuessCount(1);
+  }
 
   const pickedNumberHandler = (picked) => {
     setPickedNumber(picked);
@@ -17,8 +27,13 @@ export default function App() {
 
   let screen = <StartGameScreen onPick={pickedNumberHandler} />
   if(pickedNumber) {
-    screen = <GameScreen pickedNumber={pickedNumber} />
+    screen = <GameScreen resetGame={resetGame} guessCount={guessCount} setGuessCount={setGuessCount} makeComputerWinner={setDidComputerWin} pickedNumber={pickedNumber} />
   }
+  if(didComputerWin) {
+    screen = <GameOverScreen restartGame={resetGame} guessCount={guessCount} guessedNumber={pickedNumber} />
+  }
+
+
 
   return (
     <LinearGradient colors={[Colors.primary500, Colors.accent800]} style={styles.appContainer}>
