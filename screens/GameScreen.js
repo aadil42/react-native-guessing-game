@@ -87,7 +87,7 @@ const GameScreen = ({pickedNumber,
             </View>
 
             <View style={styles.btnContainer}>
-                {guessCount > 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
+                {guessCount === 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
             </View>
         </View>
     );
