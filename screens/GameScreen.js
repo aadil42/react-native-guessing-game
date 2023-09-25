@@ -76,6 +76,11 @@ const GameScreen = ({pickedNumber}) => {
                 {guessCount > 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
                 </View>
             </View>
+
+            <View style={styles.countContainer}>
+                <Title styles={styles.guessNum} text="Guess Count"/>
+                <Title styles={styles.guessNum} text={guessCount}/>
+            </View>
         </View>
     );
 }
@@ -118,6 +123,23 @@ const styles = StyleSheet.create({
         paddingTop: 14,
         width: "60%"
     },
+    countContainer: {
+        flexDirection: 'row',
+        justifyContent: "space-around",
+        marginTop: 20
+    },
+    guessNum: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        borderWidth: 4,
+        borderColor: Colors.white500,
+        color: Colors.white500,
+        marginTop: 30,
+        padding: 10,
+        paddingTop: 14,
+        width: "50%",
+    }
 });
 
 export default GameScreen;
