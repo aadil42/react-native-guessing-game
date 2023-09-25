@@ -17,7 +17,7 @@ export default function App() {
 
   let screen = <StartGameScreen onPick={pickedNumberHandler} />
   if(pickedNumber) {
-    screen = <GameScreen />
+    screen = <GameScreen pickedNumber={pickedNumber} />
   }
 
   return (
