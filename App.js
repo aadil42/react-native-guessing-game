@@ -5,6 +5,8 @@ import { useState } from 'react';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 // just to set upstream
+import Colors from './constants/Colors';
+
 export default function App() {
 
   const [pickedNumber, setPickedNumber] = useState();
@@ -19,7 +21,7 @@ export default function App() {
   }
 
   return (
-    <LinearGradient colors={["#72063c", "#ddb52f"]} style={styles.appContainer}>
+    <LinearGradient colors={[Colors.primary500, Colors.accent800]} style={styles.appContainer}>
       <ImageBackground 
         source={require('./assets/images/background.png')} 
         resizeMode="cover"
