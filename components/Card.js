@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
-
-const Card = ({children}) => {
+import { StyleSheet, View } from "react-native";
+import Colors from "../constants/Colors";
+const Card = ({children, incomingStyles}) => {
     return (
-      <View style={styles.container}>      
+      <View style={[styles.container, [...incomingStyles]]}>      
         {children}      
       </View>
     );
@@ -10,7 +10,7 @@ const Card = ({children}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 100,
+        marginTop: 30,
         marginHorizontal: 24,
         padding: 16,
         backgroundColor: Colors.primary700,

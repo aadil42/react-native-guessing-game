@@ -4,6 +4,7 @@ import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import BlurButton from '../components/BlurButton';
 import Colors from '../constants/Colors';
+import Card from '../components/Card';
 
 const generateGuess = (min, max, exclude) => {
     let guess =  Math.floor(Math.random() * (max - min)) + min;
@@ -67,11 +68,13 @@ const GameScreen = ({pickedNumber,
     return (
         <View style={styles.screen}>
 
-            <Title styles={styles.title}  text="Opponent's guess" />
+            <Title incomingStyles={[styles.secondaryTitle, styles.borderRadius20]}  text="Computer's guess" />
             <View style={styles.numContainer}>
-                <Title styles={styles.num} text={guess}/>
+                <Title incomingStyles={[styles.num, styles.borderRadius20]} text={guess}/>
             </View>
-            <View>
+
+            <Card incomingStyles={[]}>
+                <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
                 <View style={styles.btnContainer}>
                 {guessCount < 3 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
                 {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />}
@@ -79,11 +82,15 @@ const GameScreen = ({pickedNumber,
                 {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
                 {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
                 </View>
-            </View>
+            </Card>
 
             <View style={styles.countContainer}>
-                <Title styles={styles.guessNum} text="Guess Count"/>
-                <Title styles={styles.guessNum} text={guessCount}/>
+                <Title incomingStyles={[styles.guessNum, 
+                                        styles.borderRadius20,
+                                        ]} text="Guess Count"/>
+                <Title incomingStyles={[styles.guessNum, 
+                                        styles.borderRadius20,
+                                        ]} text={guessCount}/>
             </View>
 
             <View style={styles.btnContainer}>
@@ -104,31 +111,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20
     },
-    title: {
-        textAlign: 'center',
-        fontSize: 25,
-        fontWeight: 'bold',
-        borderWidth: 4,
-        borderColor: Colors.white500,
-        color: Colors.white500,
-        marginTop: 30,
-        padding: 10,
-        paddingTop: 14
-    },
     numContainer: {
         flexDirection: "row",
         justifyContent: "center",
     },  
     num: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 35,
         fontWeight: 'bold',
         borderWidth: 4,
         borderColor: Colors.accent800,
         color: Colors.accent800,
         marginTop: 30,
-        padding: 10,
         paddingTop: 14,
+        paddingBottom: 8,
         width: "60%"
     },
     countContainer: {
@@ -144,9 +140,32 @@ const styles = StyleSheet.create({
         borderColor: Colors.white500,
         color: Colors.white500,
         marginTop: 30,
-        padding: 10,
+        width: "48%",
+        padding: 0,
+        paddingBottom: 14,
+        paddingHorizontal: 8
+    },
+    secondaryTitle: {
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: 'bold',
+        borderWidth: 4,
+        borderColor: Colors.accent800,
+        color: Colors.accent800,
+        marginTop: 30,
+        padding:  0,
         paddingTop: 14,
-        width: "50%",
+        paddingBottom: 8,
+    },
+    noBorders: {
+        borderWidth: 0
+    },
+    noPadding: {
+        padding: 0,
+        paddingTop: 0
+    },
+    borderRadius20: {
+        borderRadius: 20
     }
 });
 
