@@ -5,6 +5,9 @@ import PrimaryButton from '../components/PrimaryButton';
 import BlurButton from '../components/BlurButton';
 import Colors from '../constants/Colors';
 import Card from '../components/Card';
+import Icon  from '../components/Icon';
+
+import { Ionicons } from '@expo/vector-icons';
 
 const generateGuess = (min, max, exclude) => {
     let guess =  Math.floor(Math.random() * (max - min)) + min;
@@ -76,11 +79,23 @@ const GameScreen = ({pickedNumber,
             <Card incomingStyles={[]}>
                 <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
                 <View style={styles.btnContainer}>
-                {guessCount < 3 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
-                {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />}
+                {/* {guessCount < 3 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
+                {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />} */}
+                
+                {guessCount < 3 && 
+                <Icon>
+                    <Ionicons onPress={smallGuessHandler} name="md-add" size={24} color="white" />
+                </Icon>
+                }
+                {guessCount < 3 && 
+                <Icon>
+                    <Ionicons onPress={bigGuessHandler} name="md-remove" size={24} color="white" />
+                </Icon>
+                }
 
-                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
-                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />}
+
+                {/* {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
+                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />} */}
                 </View>
             </Card>
 
