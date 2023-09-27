@@ -51,9 +51,8 @@ const GameScreen = ({pickedNumber,
             ]);
             return;
         }
-        // setGuess(generateGuess(min, guess, guess));
-        // setMax(guess);
-        setGuess(pickedNumber)
+        setGuess(generateGuess(min, guess, guess));
+        setMax(guess);
         setGuessCount((count) => count+1);
     }
 
@@ -64,9 +63,8 @@ const GameScreen = ({pickedNumber,
               ]);
             return;
         }
-        // setGuess(generateGuess(guess, max, guess));
-        // setMin(guess);
-        setGuess(pickedNumber)
+        setGuess(generateGuess(guess, max, guess));
+        setMin(guess);
         setGuessCount((count) => count+1);
     }
 
