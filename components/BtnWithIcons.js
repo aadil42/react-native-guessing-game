@@ -27,13 +27,15 @@ const styles = StyleSheet.create({
         margin: 4,
         borderRadius: 28,
         overflow: "hidden",
-        // width: "45%"
-        width: 60
+        width: 80,
+        alignItems: 'center',
+        backgroundColor: Colors.primary600,
     },
     btn: {
-        backgroundColor: Colors.primary600,
+        width: "100%",
         paddingHorizontal: 8,
         paddingVertical: 8,
+        alignItems: 'center'
     },
     // for ios
     pressedBtn: {

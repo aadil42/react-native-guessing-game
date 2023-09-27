@@ -5,7 +5,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import BlurButton from '../components/BlurButton';
 import Colors from '../constants/Colors';
 import Card from '../components/Card';
-import Icon  from '../components/Icon';
+import BtnWithIcons  from '../components/BtnWithIcons';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -83,16 +83,15 @@ const GameScreen = ({pickedNumber,
                 {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />} */}
                 
                 {guessCount < 3 && 
-                <Icon>
-                    <Ionicons onPress={smallGuessHandler} name="md-add" size={24} color="white" />
-                </Icon>
+                <BtnWithIcons onPress={smallGuessHandler}>
+                    <Ionicons  name="md-remove" size={24} color="white" />
+                </BtnWithIcons>
                 }
                 {guessCount < 3 && 
-                <Icon>
-                    <Ionicons onPress={bigGuessHandler} name="md-remove" size={24} color="white" />
-                </Icon>
+                <BtnWithIcons onPress={bigGuessHandler}>
+                    <Ionicons  name="md-add" size={24} color="white" />
+                </BtnWithIcons>
                 }
-
 
                 {/* {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
                 {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />} */}
@@ -106,6 +105,11 @@ const GameScreen = ({pickedNumber,
                 <Title incomingStyles={[styles.guessNum, 
                                         styles.borderRadius20,
                                         ]} text={guessCount}/>
+            </View>
+
+            <View>
+            {guessCount === 3 && <Title incomingStyles={[styles.borderRadius20]} 
+                        text={`Number was ${pickedNumber}`} />}
             </View>
 
             <View style={styles.btnContainer}>
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 20,
     },
     numContainer: {
         flexDirection: "row",

@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import Colors from "../constants/Colors";
+
 const Card = ({children, incomingStyles}) => {
     return (
       <View style={[styles.container, [...incomingStyles]]}>      
