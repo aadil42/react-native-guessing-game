@@ -93,8 +93,17 @@ const GameScreen = ({pickedNumber,
                 </BtnWithIcons>
                 }
 
-                {/* {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too small" />}
-                {guessCount === 3 && <BlurButton onPress={onBlurPress} title="Too big" />} */}
+                {guessCount === 3 && 
+                <BtnWithIcons onPress={onBlurPress}>
+                    <Ionicons  name="md-remove" size={24} color="white" />
+                </BtnWithIcons>
+                }
+
+                {guessCount === 3 && 
+                <BtnWithIcons onPress={onBlurPress}>
+                    <Ionicons  name="md-add" size={24} color="white" />
+                </BtnWithIcons>
+                }
                 </View>
             </Card>
 
