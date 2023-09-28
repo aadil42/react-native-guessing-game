@@ -5,6 +5,7 @@ const Colors = {
     primary500:"#72063c",
     accent800: "#ddb52f",
     white500: "#ffffff",
+    black500: "#000000"
 };
 
 export default Colors;

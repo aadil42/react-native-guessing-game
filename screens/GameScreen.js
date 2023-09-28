@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert, FlatList } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
-import BlurButton from '../components/BlurButton';
 import Colors from '../constants/Colors';
 import Card from '../components/Card';
 import BtnWithIcons  from '../components/BtnWithIcons';
@@ -23,19 +22,16 @@ const GameScreen = ({pickedNumber,
                      setGuessCount, 
                      guessCount,
                      resetGame}) => {
-    const [guess, setGuess] = useState();
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(100);
-
-
-    useEffect(() => {
-        setGuess(generateGuess(min,max,pickedNumber));
-    },[]);
+    const [guess, setGuess] = useState(generateGuess(min,max,pickedNumber));
+    const [guessLog, setGuessLog] = useState([]);
 
     useEffect(() => {
         if(guess === pickedNumber) {
             makeComputerWinner(true);
         }
+        setGuessLog((currentLog) => [guess, ...currentLog]);
     },[guess]);
 
     const onBlurPress = () => {
@@ -83,22 +79,20 @@ const GameScreen = ({pickedNumber,
                 {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />} */}
                 
                 {guessCount < 3 && 
-                <BtnWithIcons onPress={smallGuessHandler}>
-                    <Ionicons  name="md-remove" size={24} color="white" />
-                </BtnWithIcons>
+                    <BtnWithIcons onPress={smallGuessHandler}>
+                        <Ionicons  name="md-remove" size={24} color="white" />
+                    </BtnWithIcons>
                 }
-                {guessCount < 3 && 
-                <BtnWithIcons onPress={bigGuessHandler}>
-                    <Ionicons  name="md-add" size={24} color="white" />
-                </BtnWithIcons>
+                { guessCount < 3 && 
+                    <BtnWithIcons onPress={bigGuessHandler}>
+                        <Ionicons  name="md-add" size={24} color="white" />
+                    </BtnWithIcons>
                 }
-
                 {guessCount === 3 && 
                 <BtnWithIcons onPress={onBlurPress}>
                     <Ionicons  name="md-remove" size={24} color="white" />
                 </BtnWithIcons>
                 }
-
                 {guessCount === 3 && 
                 <BtnWithIcons onPress={onBlurPress}>
                     <Ionicons  name="md-add" size={24} color="white" />
@@ -107,23 +101,35 @@ const GameScreen = ({pickedNumber,
                 </View>
             </Card>
 
-            <View style={styles.countContainer}>
-                <Title incomingStyles={[styles.guessNum, 
-                                        styles.borderRadius20,
-                                        ]} text="Guess Count"/>
-                <Title incomingStyles={[styles.guessNum, 
-                                        styles.borderRadius20,
-                                        ]} text={guessCount}/>
+            <View>
+            {guessCount === 3 && 
+                    <Text style={styles.smallText}> 
+                        Number Was {pickedNumber}
+                    </Text>
+            }
+            </View>
+
+            <View style={styles.btn2Container}>
+                {guessCount === 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
             </View>
 
             <View>
-            {guessCount === 3 && <Title incomingStyles={[styles.borderRadius20]} 
-                        text={`Number was ${pickedNumber}`} />}
+                <Text style={styles.smallText}> 
+                    Your Guesses
+                </Text>
             </View>
 
-            <View style={styles.btnContainer}>
-                {guessCount === 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
-            </View>
+            <FlatList 
+                    data={guessLog}
+                    renderItem={(itemData) => {
+                        return (
+                            <View style={styles.logContainer}>
+                                <Title incomingStyles={[styles.logText]} text={itemData.item} />
+                            </View>
+                        )
+                    }}
+                    keyExtractor={(item) => item}
+            />
         </View>
     );
 }
@@ -139,26 +145,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
+    btn2Container: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+    },
     numContainer: {
         flexDirection: "row",
         justifyContent: "center",
     },  
     num: {
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 20,
         fontWeight: 'bold',
         borderWidth: 4,
         borderColor: Colors.accent800,
         color: Colors.accent800,
-        marginTop: 30,
-        paddingTop: 14,
-        paddingBottom: 8,
-        width: "60%"
-    },
-    countContainer: {
-        flexDirection: 'row',
-        justifyContent: "space-around",
-        marginTop: 20
+        marginTop: 10,
+        paddingTop: 5,
+        paddingBottom: 0,
+        width: "40%"
     },
     guessNum: {
         textAlign: 'center',
@@ -167,15 +174,11 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderColor: Colors.white500,
         color: Colors.white500,
-        marginTop: 30,
-        width: "48%",
-        padding: 0,
-        paddingBottom: 14,
-        paddingHorizontal: 8
+        width: "70%",
     },
     secondaryTitle: {
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
         borderWidth: 4,
         borderColor: Colors.accent800,
@@ -194,6 +197,24 @@ const styles = StyleSheet.create({
     },
     borderRadius20: {
         borderRadius: 20
+    },
+    smallText: {
+        fontSize: 20,
+        color: Colors.black500,
+        textAlign: 'center',
+        marginTop: 5
+    },
+    logText: {
+        fontSize: 20,
+        paddingTop: 5,
+        paddingBottom: 0,
+        width: "50%",
+        marginTop: 0,
+        marginBottom: 10
+    },
+    logContainer: {
+        alignItems: 'center',
+        marginTop: 10
     }
 });
 
