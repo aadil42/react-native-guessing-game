@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
@@ -22,14 +22,18 @@ const GameOverScreen = ({guessedNumber, guessCount, restartGame}) => {
                 </View>
                 
                 <View>
-                    <Title incomingStyles={[]}  styles={styles.title} text={`this is the computer's guess: ${guessedNumber}`} />
+                    <Text style={styles.winMsg}>
+                        The Number was&nbsp;
+                        <Text style={styles.stats}>
+                            {guessedNumber}. 
+                        </Text>
+                        {'\n'}
+                        &nbsp;It took&nbsp;
+                        <Text style={styles.stats}>
+                            {guessCount}
+                        </Text> guess.
+                    </Text>
                 </View>
-                
-                <View style={styles.countContainer}>
-                    <Title incomingStyles={[]} styles={styles.guessNum} text="Total Guess taken"/>
-                    <Title incomingStyles={[]} styles={styles.guessNum} text={guessCount}/>
-                </View>
-                
                 <View style={styles.btnContainer}>
                     <PrimaryButton title="Reset" onPress={startAgain} />
                 </View>
@@ -106,6 +110,15 @@ const styles = StyleSheet.create({
         borderColor: Colors.primary800,
         overflow: 'hidden',
         margin: 36,
+    },
+    winMsg: {
+        fontSize: 25,
+        textAlign:  'center',
+        marginTop: 25,
+        color: Colors.white500
+    },
+    stats: {
+        color: Colors.primary500
     }
 });
 
