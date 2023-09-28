@@ -5,6 +5,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
 import Card from '../components/Card';
 import BtnWithIcons  from '../components/BtnWithIcons';
+import GuessLog from '../components/GuessLog';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -47,8 +48,9 @@ const GameScreen = ({pickedNumber,
             ]);
             return;
         }
-        setGuess(generateGuess(min, guess, guess));
-        setMax(guess);
+        // setGuess(generateGuess(min, guess, guess));
+        // setMax(guess);
+        setGuess(pickedNumber);
         setGuessCount((count) => count+1);
     }
 
@@ -59,8 +61,9 @@ const GameScreen = ({pickedNumber,
               ]);
             return;
         }
-        setGuess(generateGuess(guess, max, guess));
-        setMin(guess);
+        // setGuess(generateGuess(guess, max, guess));
+        // setMin(guess);
+        setGuess(pickedNumber);
         setGuessCount((count) => count+1);
     }
 
@@ -124,7 +127,7 @@ const GameScreen = ({pickedNumber,
                     renderItem={(itemData) => {
                         return (
                             <View style={styles.logContainer}>
-                                <Title incomingStyles={[styles.logText]} text={itemData.item} />
+                                <GuessLog guessNumber={guessLog.length - itemData.index} incomingStyles={[styles.logText]} guess={itemData.item} />
                             </View>
                         )
                     }}
