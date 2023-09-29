@@ -5,6 +5,7 @@ import { useState } from 'react';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
+import MaxGuessCount from './constants/MaxGuessCount';
 
 // just to set upstream
 import Colors from './constants/Colors';
@@ -27,7 +28,7 @@ export default function App() {
 
   let screen = <StartGameScreen onPick={pickedNumberHandler} />
   if(pickedNumber) {
-    screen = <GameScreen resetGame={resetGame} guessCount={guessCount} setGuessCount={setGuessCount} makeComputerWinner={setDidComputerWin} pickedNumber={pickedNumber} />
+    screen = <GameScreen MaxGuessCount={MaxGuessCount} resetGame={resetGame} guessCount={guessCount} setGuessCount={setGuessCount} makeComputerWinner={setDidComputerWin} pickedNumber={pickedNumber} />
   }
   if(didComputerWin) {
     screen = <GameOverScreen restartGame={resetGame} guessCount={guessCount} guessedNumber={pickedNumber} />

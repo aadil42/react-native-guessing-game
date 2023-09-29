@@ -20,7 +20,8 @@ const GameScreen = ({pickedNumber,
                      makeComputerWinner, 
                      setGuessCount, 
                      guessCount,
-                     resetGame}) => {
+                     resetGame,
+                     MaxGuessCount}) => {
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(100);
     const [guess, setGuess] = useState(generateGuess(min,max,pickedNumber));
@@ -74,23 +75,23 @@ const GameScreen = ({pickedNumber,
             <Card incomingStyles={[]}>
                 <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
                     <View style={styles.btnContainer}>                
-                    {guessCount < 3 && 
+                    {guessCount < MaxGuessCount && 
                         <PrimaryButton onPress={smallGuessHandler} useIcon={{icon: 'md-remove'}} />
                     }
-                    { guessCount < 3 && 
+                    { guessCount < MaxGuessCount && 
                         <PrimaryButton onPress={bigGuessHandler} useIcon={{icon: 'md-add'}} />
                     }
-                    {guessCount === 3 && 
+                    {guessCount === MaxGuessCount && 
                     <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-remove'}} />
                     }
-                    {guessCount === 3 && 
+                    {guessCount === MaxGuessCount && 
                     <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-add'}} />
                     }
                     </View>
             </Card>
 
             <View>
-            {guessCount === 3 && 
+            {guessCount === MaxGuessCount && 
                     <Text style={styles.smallText}> 
                         Number Was {pickedNumber}
                     </Text>
@@ -98,7 +99,7 @@ const GameScreen = ({pickedNumber,
             </View>
 
             <View style={styles.btn2Container}>
-                {guessCount === 3 && <PrimaryButton onPress={resetGame} title="Reset" />}
+                {guessCount === MaxGuessCount && <PrimaryButton onPress={resetGame} title="Reset" />}
             </View>
 
             <View>
