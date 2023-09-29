@@ -4,10 +4,7 @@ import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
 import Card from '../components/Card';
-import BtnWithIcons  from '../components/BtnWithIcons';
 import GuessLog from '../components/GuessLog';
-
-import { Ionicons } from '@expo/vector-icons';
 
 const generateGuess = (min, max, exclude) => {
     let guess =  Math.floor(Math.random() * (max - min)) + min;
@@ -18,6 +15,7 @@ const generateGuess = (min, max, exclude) => {
 }
 const lieTitle = `Don't lie!`;
 const lieMessage = `You know that this is wrong...`;
+
 const GameScreen = ({pickedNumber, 
                      makeComputerWinner, 
                      setGuessCount, 
@@ -75,31 +73,20 @@ const GameScreen = ({pickedNumber,
 
             <Card incomingStyles={[]}>
                 <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
-                <View style={styles.btnContainer}>
-                {/* {guessCount < 3 && <PrimaryButton onPress={smallGuessHandler} title="Too small" />}
-                {guessCount < 3 && <PrimaryButton onPress={bigGuessHandler} title="Too big" />} */}
-                
-                {guessCount < 3 && 
-                    <BtnWithIcons onPress={smallGuessHandler}>
-                        <Ionicons  name="md-remove" size={24} color="white" />
-                    </BtnWithIcons>
-                }
-                { guessCount < 3 && 
-                    <BtnWithIcons onPress={bigGuessHandler}>
-                        <Ionicons  name="md-add" size={24} color="white" />
-                    </BtnWithIcons>
-                }
-                {guessCount === 3 && 
-                <BtnWithIcons onPress={onBlurPress}>
-                    <Ionicons  name="md-remove" size={24} color="white" />
-                </BtnWithIcons>
-                }
-                {guessCount === 3 && 
-                <BtnWithIcons onPress={onBlurPress}>
-                    <Ionicons  name="md-add" size={24} color="white" />
-                </BtnWithIcons>
-                }
-                </View>
+                    <View style={styles.btnContainer}>                
+                    {guessCount < 3 && 
+                        <PrimaryButton onPress={smallGuessHandler} useIcon={{icon: 'md-remove'}} />
+                    }
+                    { guessCount < 3 && 
+                        <PrimaryButton onPress={bigGuessHandler} useIcon={{icon: 'md-add'}} />
+                    }
+                    {guessCount === 3 && 
+                    <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-remove'}} />
+                    }
+                    {guessCount === 3 && 
+                    <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-add'}} />
+                    }
+                    </View>
             </Card>
 
             <View>
@@ -116,7 +103,7 @@ const GameScreen = ({pickedNumber,
 
             <View>
                 <Text style={styles.smallText}> 
-                    Your Guesses
+                    Guess Log
                 </Text>
             </View>
 
@@ -216,6 +203,9 @@ const styles = StyleSheet.create({
     logContainer: {
         alignItems: 'center',
         marginTop: 10
+    },
+    blurBtn: {
+        backgroundColor: Colors.primary500,
     }
 });
 
