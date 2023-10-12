@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Alert, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Alert, FlatList, useWindowDimensions } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
@@ -26,6 +26,7 @@ const GameScreen = ({pickedNumber,
     const [max, setMax] = useState(100);
     const [guess, setGuess] = useState(generateGuess(min,max,pickedNumber));
     const [guessLog, setGuessLog] = useState([]);
+    const {width, height} = useWindowDimensions();
 
     useEffect(() => {
         if(guess === pickedNumber) {
@@ -64,15 +65,33 @@ const GameScreen = ({pickedNumber,
         setGuessCount((count) => count+1);
     }
 
-    return (
-        <View style={styles.screen}>
+    const screen = {
+        flex: height < 400 ? 2 : 1,
+        justifyContent: height < 400 ? 'center' : 'flex-start',
+        flexDirection: height < 400 ? 'row' : 'column',
+        padding: height < 400 ? 10 : 24,
+    }
 
+    const secondPart = {
+        width: height < 400 ? "45%" : "100%",
+        marginLeft: height < 400 ? 30 : 0
+    }
+
+    const responsiveCard = {
+        marginTop: height < 400 ? 10 : 30
+    }
+
+    return (
+        <View style={screen}>
+
+        <View>
             <Title incomingStyles={[styles.secondaryTitle, styles.borderRadius20]}  text="Computer's guess" />
+
             <View style={styles.numContainer}>
                 <Title incomingStyles={[styles.num, styles.borderRadius20]} text={guess}/>
             </View>
 
-            <Card incomingStyles={[]}>
+            <Card incomingStyles={[responsiveCard]}>
                 <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
                     <View style={styles.btnContainer}>                
                     {guessCount < MaxGuessCount && 
@@ -89,7 +108,9 @@ const GameScreen = ({pickedNumber,
                     }
                     </View>
             </Card>
-
+        </View>
+            {/* second part */}
+        <View style={secondPart}>
             <View>
             {guessCount === MaxGuessCount && 
                     <Text style={styles.smallText}> 
@@ -120,6 +141,7 @@ const GameScreen = ({pickedNumber,
                     keyExtractor={(item) => item}
             />
         </View>
+    </View>
     );
 }
 
