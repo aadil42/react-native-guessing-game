@@ -1,41 +1,60 @@
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, useWindowDimensions } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
 
 const GameOverScreen = ({guessedNumber, guessCount, restartGame}) => {
 
+    const {width, height} = useWindowDimensions();
+
     const startAgain = () => {
         restartGame();
     }
 
+    const screen = {
+        flex: height < 400 ? 2 : 1,
+        justifyContent: height < 400 ? 'center' : 'flex-start',
+        flexDirection: height < 400 ? 'row' : 'column',
+        padding: height < 400 ? 10 : 24,
+    }
+
+    const secondPart = {
+        width: height < 400 ? "45%" : "100%",
+        marginLeft: height < 400 ? 30 : 0
+    }
+
     return (
-            <View style={styles.screen}>
+            <View style={screen}>
                 <View style={styles.imageContainer}>
                     <Image 
                     style={styles.image}
                     source={require('../assets/images/success.png')}
                     />
                 </View>
-                <View>
-                    <Title incomingStyles={[]} styles={styles.title}  text="Computer Won!!" />
-                </View>
-                
-                <View>
-                    <Text style={styles.winMsg}>
-                        The Number was&nbsp;
-                        <Text style={styles.stats}>
-                            {guessedNumber}. 
+
+                <View style={secondPart}>
+                    
+                    <View>
+                        <Text style={styles.winMsg}>
+                            The Number was&nbsp;
+                            <Text style={styles.stats}>
+                                {guessedNumber}. 
+                            </Text>
+                            {'\n'}
+                            &nbsp;It took&nbsp;
+                            <Text style={styles.stats}>
+                                {guessCount}
+                            </Text> guess.
                         </Text>
-                        {'\n'}
-                        &nbsp;It took&nbsp;
-                        <Text style={styles.stats}>
-                            {guessCount}
-                        </Text> guess.
-                    </Text>
-                </View>
-                <View style={styles.btnContainer}>
-                    <PrimaryButton title="Reset" onPress={startAgain} />
+                    </View>
+
+                    <View>
+                        <Title incomingStyles={[]} styles={styles.title}  text="Computer Won!!" />
+                    </View>
+
+                    <View style={styles.btnContainer}>
+                        <PrimaryButton title="Reset" onPress={startAgain} />
+                    </View>
                 </View>
             </View>
     );
