@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Alert, FlatList, useWindowDimensions } from 'react-native';
+import { Text, View, StyleSheet, Alert, FlatList, useWindowDimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Title from '../components/Title';
 import PrimaryButton from '../components/PrimaryButton';
 import Colors from '../constants/Colors';
@@ -82,66 +82,69 @@ const GameScreen = ({pickedNumber,
     }
 
     return (
-        <View style={screen}>
+    //    <ScrollView >
+    //    <KeyboardAvoidingView style={screen} behavior='position'>
+            <View style={screen}>
+                <View>
+                    <Title incomingStyles={[styles.secondaryTitle, styles.borderRadius20]}  text="Computer's guess" />
 
-        <View>
-            <Title incomingStyles={[styles.secondaryTitle, styles.borderRadius20]}  text="Computer's guess" />
+                    <View style={styles.numContainer}>
+                        <Title incomingStyles={[styles.num, styles.borderRadius20]} text={guess}/>
+                    </View>
 
-            <View style={styles.numContainer}>
-                <Title incomingStyles={[styles.num, styles.borderRadius20]} text={guess}/>
-            </View>
-
-            <Card incomingStyles={[responsiveCard]}>
-                <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
-                    <View style={styles.btnContainer}>                
-                    {guessCount < MaxGuessCount && 
-                        <PrimaryButton onPress={smallGuessHandler} useIcon={{icon: 'md-remove'}} />
-                    }
-                    { guessCount < MaxGuessCount && 
-                        <PrimaryButton onPress={bigGuessHandler} useIcon={{icon: 'md-add'}} />
-                    }
+                    <Card incomingStyles={[responsiveCard]}>
+                        <Title incomingStyles={[styles.title, styles.noBorders, styles.noPadding]} text="High or Low?" />
+                            <View style={styles.btnContainer}>                
+                            {guessCount < MaxGuessCount && 
+                                <PrimaryButton onPress={smallGuessHandler} useIcon={{icon: 'md-remove'}} />
+                            }
+                            { guessCount < MaxGuessCount && 
+                                <PrimaryButton onPress={bigGuessHandler} useIcon={{icon: 'md-add'}} />
+                            }
+                            {guessCount === MaxGuessCount && 
+                            <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-remove'}} />
+                            }
+                            {guessCount === MaxGuessCount && 
+                            <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-add'}} />
+                            }
+                            </View>
+                    </Card>
+                </View>
+                    {/* second part */}
+                <View style={secondPart}>
+                    <View>
                     {guessCount === MaxGuessCount && 
-                    <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-remove'}} />
-                    }
-                    {guessCount === MaxGuessCount && 
-                    <PrimaryButton incomingStyles={[styles.blurBtn]} onPress={onBlurPress} useIcon={{icon: 'md-add'}} />
+                            <Text style={styles.smallText}> 
+                                Number Was {pickedNumber}
+                            </Text>
                     }
                     </View>
-            </Card>
-        </View>
-            {/* second part */}
-        <View style={secondPart}>
-            <View>
-            {guessCount === MaxGuessCount && 
-                    <Text style={styles.smallText}> 
-                        Number Was {pickedNumber}
-                    </Text>
-            }
-            </View>
 
-            <View style={styles.btn2Container}>
-                {guessCount === MaxGuessCount && <PrimaryButton onPress={resetGame} title="Reset" />}
-            </View>
+                    <View style={styles.btn2Container}>
+                        {guessCount === MaxGuessCount && <PrimaryButton onPress={resetGame} title="Reset" />}
+                    </View>
 
-            <View>
-                <Text style={styles.smallText}> 
-                    Guess Log
-                </Text>
-            </View>
+                    <View>
+                        <Text style={styles.smallText}> 
+                            Guess Log
+                        </Text>
+                    </View>
 
-            <FlatList 
-                    data={guessLog}
-                    renderItem={(itemData) => {
-                        return (
-                            <View style={styles.logContainer}>
-                                <GuessLog guessNumber={guessLog.length - itemData.index} incomingStyles={[styles.logText]} guess={itemData.item} />
-                            </View>
-                        )
-                    }}
-                    keyExtractor={(item) => item}
-            />
-        </View>
-    </View>
+                    <FlatList 
+                            data={guessLog}
+                            renderItem={(itemData) => {
+                                return (
+                                    <View style={styles.logContainer}>
+                                        <GuessLog guessNumber={guessLog.length - itemData.index} incomingStyles={[styles.logText]} guess={itemData.item} />
+                                    </View>
+                                )
+                            }}
+                            keyExtractor={(item) => item}
+                    />
+                </View>
+                </View>
+    //    </KeyboardAvoidingView> 
+    // </ScrollView> 
     );
 }
 
