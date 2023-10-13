@@ -1,4 +1,4 @@
-import {  StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import {  StyleSheet, ImageBackground, SafeAreaView, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
@@ -37,7 +37,9 @@ export default function App() {
 
 
   return (
-    <LinearGradient colors={[Colors.primary500, Colors.accent800]} style={styles.appContainer}>
+    <>
+      <StatusBar style="light" />
+      <LinearGradient colors={[Colors.primary500, Colors.accent800]} style={styles.appContainer}>
       <ImageBackground 
         source={require('./assets/images/background.png')} 
         resizeMode="cover"
@@ -49,6 +51,7 @@ export default function App() {
         </SafeAreaView>
       </ImageBackground>
     </LinearGradient>
+    </>
   );
 }
 
